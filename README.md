@@ -16,8 +16,9 @@
 2. git add . 添加所有修改文件
 3. git commit -m "修改信息"  提交修改文件
 
-# git 远程仓库
-如果提示没有remote
+# git 远程仓库  
+
+如果提示没有remote  
 1. git remote add origin https://github.com/FattyMelon/LeetCode.git
 2. git push origin master push代码至远程仓库的master分支
 
