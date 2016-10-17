@@ -8,7 +8,7 @@
 # git init
 
 1. 本地新建文件夹
-2. git init
+2. git init git初始化  
 3. git clone https://github.com/FattyMelon/LeetCode.git
 
 # git 添加文件
@@ -19,9 +19,10 @@
 # git 远程仓库  
 
 如果提示没有remote  
-1. git remote add origin https://github.com/FattyMelon/LeetCode.git
+1. git remote add origin https://github.com/FattyMelon/LeetCode.git  
 2. git push origin master push代码至远程仓库的master分支
 
 # git push前先pull，因为有可能别人的修改导致你无法提交
 1. git pull
 2. git push
+3. 如果提示错误，把origin master加在pull和push后面
