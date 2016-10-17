@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map <int, int> map1;
+        vector <int> result;
+
+        for (int i = 0; i < nums.size(); ++i) {
+            map1[nums[i]] = i;
+        }
+        
+        //find(key)
+        for (int i = 0; i < nums.size(); ++i) {
+            int temp = target - nums[i];
+            if (map1.find(temp) != map1.end() && map1[temp] > i) {
+                result.push_back(i);
+                result.push_back(map1[temp]);
+                break;
+            }
+        }
+        return result;
+    }
+};
