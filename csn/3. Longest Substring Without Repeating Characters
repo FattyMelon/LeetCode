@@ -1,0 +1,37 @@
+// 关键点在if (alp[s[i]] >= start)
+// 如果标记中出现大于等于start，所以start后面已经出现过此字母，得重新计数。
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        //初始化
+        int alp[150];
+        memset(alp, -1, sizeof(alp));
+        int maxlen = 0;
+        int start = 0;
+        int i;
+        
+        for (i = 0; i < s.size(); ++i) {
+            if (alp[s[i]] >= start) {
+                maxlen = max(i - start, maxlen);
+                start = alp[s[i]] + 1;
+            }
+            alp[s[i]] = i;
+        }
+        
+        return max(i - start, maxlen);
+    }
+};
+
+
+// 错误案例
+/*
+        for (i = 0; i < s.size(); ++i) {
+            if (alp[s[i]]!= -1) {
+                maxlen = max(i - start, maxlen);
+                start = alp[s[i]] + 1;
+            }
+            alp[s[i]] = i;
+        }
+其中的判断条件只能说明字母出现过。
+*/

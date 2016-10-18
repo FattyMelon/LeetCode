@@ -1,0 +1,36 @@
+// 时间复杂度O(log(m + n))
+
+class Solution {
+public:
+    double find(const vector<int>& a, int m, const vector<int>& b, int n, int k, int start1, int start2) {
+        if (m > n)
+            return find(b, n, a, m, k, start2, start1);
+        if (m == 0)
+            return b[start2 + k-1];
+        if (k == 1)
+            return min(a[start1], b[start2]);
+        int pa = min(k/2, m);
+        int pb = k - pa;
+        if (a[start1 + pa - 1] < b[start2 + pb - 1])
+            return find(a, m-pa, b, n, k-pa, start1+pa, start2);
+        else if (a[start1 + pa - 1] > b[start2 + pb - 1])
+            return find(a, m, b, n-pb, k-pb, start1, start2+pb);
+        else
+            return a[start1 + pa - 1];
+    }
+
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int m = nums1.size(), n = nums2.size();
+        int total = m + n;
+        if (m == 0 && n == 0)
+            return 0;
+        else {
+            if (total & 0x01)
+                return find(nums1, m, nums2, n, total / 2 + 1, 0, 0);
+            else
+                return (find(nums1, m, nums2, n, total / 2 + 1, 0, 0)
+                        + find(nums1, m, nums2, n, total / 2, 0, 0)) / 2;
+        }
+
+    }
+};
