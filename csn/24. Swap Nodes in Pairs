@@ -1,0 +1,27 @@
+// 基本链表题，不过要注意选择的指针。
+
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (!head)
+            return head;        
+        ListNode dummy(-1);
+        dummy.next = head;
+        
+        ListNode *p = head, *q = head->next;
+        ListNode *s = &dummy;
+        
+        while(q) {
+            p->next = q->next;
+            q->next = p;
+            s->next = q;
+            
+            if (!p->next)
+                return dummy.next;
+            s = p;
+            p = p->next;
+            q = p->next;
+        }
+        return dummy.next;
+    }
+};

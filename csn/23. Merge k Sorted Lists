@@ -1,0 +1,48 @@
+// 分治法，用队列代替了递归。
+// 需要背下mergeTwoLists算法！！！
+
+class Solution {
+private:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if (list1 == NULL)
+            return list2;
+        if (list2 == NULL)
+            return list1;
+
+        ListNode dummy(0);
+        ListNode* current = &dummy;
+
+        while(list1 != NULL && list2 != NULL) {
+            if (list1->val <= list2->val){
+                current->next = list1;
+                list1 = list1->next;
+            }
+            else {
+                current->next = list2;
+                list2 = list2->next;
+            }
+            current = current->next;
+        }
+
+        if (list1 != NULL)
+            current->next = list1;
+        if (list2 != NULL)
+            current->next = list2;
+
+        return dummy.next;
+    }
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        queue<ListNode *> queue1;
+        for (auto listnode : lists)
+            queue1.push(listnode);
+        while(queue1.size() > 1) {
+            ListNode *p1 = queue1.front();
+            queue1.pop();
+            ListNode *p2 = queue1.front();
+            queue1.pop();
+            queue1.push(mergeTwoLists(p1, p2));
+        }
+        return queue1.front();
+    }
+};
