@@ -19,7 +19,7 @@
 
 # git 添加文件
 1. git status 查看文件改动信息
-2. git add . 添加所有修改文件
+2. git add csn/  添加自己目录下的文件（尽量不要所用 git add . 添加所有修改文件）  
 3. git commit -m "修改信息"  提交修改文件
 
 # git 远程仓库  
