@@ -1,0 +1,21 @@
+// 只扫描lg(x) / 2 长度。算法复杂度O(lg(x))
+
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        int result = 0;
+        
+        if (x == 0)
+            return true;
+        if (x < 0 || x % 10 == 0)
+            return false;
+
+        while (x) {
+            if (result == x / 10 || result == x)
+                return true;
+            result = result * 10 + x % 10;
+            x /= 10;
+        }
+        return false;
+    }
+};

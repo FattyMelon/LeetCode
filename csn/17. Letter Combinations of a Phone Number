@@ -1,0 +1,33 @@
+// 暴力枚举，时间复杂度为O(3的N次方)
+
+class Solution {
+public:
+    vector <string> keyboard = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+    void dfs(vector <string> &result, string str, int count, const string digits) {
+        if (count >= digits.size()) {
+            result.push_back(str);
+            return;
+        }
+        for (auto c : keyboard[digits[count] - '2']) {
+            dfs(result, str + c, count+1, digits);
+        }
+    }
+
+    vector<string> letterCombinations(string digits) {
+        vector <string> result;
+
+        if (digits.size() == 0)
+            return result;
+        
+        for (auto c : digits) {
+            if (c == '0' || c == '1')
+                return result;
+        }
+
+        string temp = "";
+        dfs(result, temp, 0, digits);
+
+        return result;
+    }
+};

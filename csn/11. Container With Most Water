@@ -1,0 +1,23 @@
+// 如果用暴力解法，算法复杂度为O(n平方)
+// 优化后，剪枝掉不需要比较的部分，最终算法复杂度为O(n)
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        if (height.empty()) 
+            return 0;
+            
+        int left = 0, right = height.size() - 1;
+        
+        int result = -1;
+        while(left != right) {
+            result = max(result, (right - left) * min(height[left], height[right]));
+            if (height[left] <= height[right])
+                left++;
+            else
+                right--;
+        }
+        
+        return result;
+    }
+};

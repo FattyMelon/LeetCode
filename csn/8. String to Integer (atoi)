@@ -1,0 +1,69 @@
+// 注意点（函数功能）：
+// 1. 过滤字符串开头的空格
+// 2. +-符号只能出现一次，否则return 0
+// 3. 字母一次都不能出现， 否则return 0
+// 4. 字符串大小超过INT_MAX,或INT_MIN也需要判断
+
+
+// 16ms, 优化方面可使用迭代器，int改为long型增加判断数字位数。
+class Solution {
+public:
+    int myAtoi(string str) {
+        int result = 0, sign = 1, i = 0;
+
+        // 处理字符串前的空格和符号
+        while (str[i] == ' ') i++;
+        if (str[i] == '-') {
+            sign = -1; i++;
+        } else if (str[i] == '+') {
+            sign = 1; i++;
+        }
+
+        while (str[i] >= '0' && str[i] <= '9') {
+            if (result > INT_MAX/10 || (result == INT_MAX/10 && str[i] - '0' > 7))
+                if (sign == 1)
+                    return INT_MAX;
+                else
+                    return INT_MIN;
+            result = 10 * result + (str[i++] - '0');
+        }
+
+        return result * sign;
+    }
+};
+
+
+// 8ms
+class Solution {
+public:
+    int myAtoi(string str) {
+        long long intVal = 0; //最后返回的int值  
+        int sign = 1;   //1代表正数， -1代表负数  
+        int k = 0;
+        std::string::iterator it = str.begin();
+        //跳过字符串前面的空格  
+        while (*it == ' ')  
+            it++;  
+      
+        //取得int值的符号  
+        if (*it == '-')  
+            sign = -1;  
+        if (*it == '-' || *it == '+')  
+            it++;  
+      
+        while (*it >= '0' && *it <= '9' && k <= 10) {  
+            //ASCII码中'0'的值是0x30  
+            intVal = intVal * 10 + ((int)*it - 0x30);  
+            it++;  
+            k++;
+        }
+        
+        long long result = sign * intVal;
+        if (k >= 10) {
+            if(result < INT_MIN) return INT_MIN;
+            else if (result > INT_MAX) return INT_MAX;
+        } else {
+            return result;
+        }
+    }
+};
