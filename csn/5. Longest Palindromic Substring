@@ -1,4 +1,4 @@
-// 待看
+// 6ms, 待看
 string longestPalindrome(string s) {
     if (s.empty()) return "";
     if (s.size() == 1) return s;
