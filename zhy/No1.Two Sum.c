@@ -1,4 +1,4 @@
-
+/T= O (n^2)/
 
 
 int* twoSum(int* nums, int numsSize, int target) {
