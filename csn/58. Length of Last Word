@@ -1,0 +1,23 @@
+// 关键在于 'a   '这种字符串
+// if (it == s.begin() && *it != ' ') ++count; 这个是重点
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        if (s.size() == 0)
+            return 0;
+        string::iterator it = s.end() - 1;
+        while(*it == ' ' && it != s.begin()) --it;
+        
+        
+        int count = 0;
+        while(*it != ' ' && it != s.begin()) {
+            --it;
+            ++count;
+        }
+        
+        if (it == s.begin() && *it != ' ') ++count;
+        
+        return count;        
+    }
+};

@@ -1,0 +1,30 @@
+// 模拟题，注意stringstream的使用！！！
+
+class Solution {
+private:
+    string helper(string str) {
+        int count = 1;
+        stringstream ss;
+        char ch = str[0];
+        for (int i = 1; i < str.size(); ++i) {
+            if (str[i] !=  ch) {
+                ss << count << ch;
+                count = 1;
+                ch = str[i];
+            } else {
+                ++count;
+            }
+        }
+        ss << count << ch;
+        return ss.str();
+    }
+public:
+    string countAndSay(int n) {
+        if (n <= 0) return "";
+        string str = "1";
+        for (int i = 1; i < n; ++i) {
+            str = helper(str);
+        }
+        return str;
+    }
+};
