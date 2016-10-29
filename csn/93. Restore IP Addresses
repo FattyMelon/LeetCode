@@ -1,0 +1,34 @@
+// 递归求解，注意此测试用例
+// string s = "010010";
+// 输出 [0.10.0.10, 0.100.1.0]
+
+class Solution {
+private:
+    void getIp(vector<string> &vec, string subStr, string nowStr, int n) {
+        if (n <= 0) { //递归终止
+            if (subStr.size() == 0)
+                vec.push_back(nowStr.substr(0, nowStr.size()-1));
+            return;
+        }
+        if (subStr.size() < n)  return;
+        if (subStr.size() > 3*n)  return;
+
+        if (subStr[0] == '0')
+            getIp(vec, subStr.substr(1), nowStr + '0' + '.', n-1);  //特殊用例
+        else {
+            for (int i = 1; i <= subStr.size() && i <= 3; ++i) {
+                string temp = subStr.substr(0,i);
+                if (i == 3 && stoi(temp) > 255) return;
+                getIp(vec, subStr.substr(i), nowStr + temp + '.', n - 1);
+            }
+        }
+    }
+public:
+    vector<string> restoreIpAddresses(string s) {
+        vector<string> result;
+        if (s.size() < 4)   return result;
+        // recusive, n代表还剩多少部分没解析
+        getIp(result, s, "", 4);
+        return result;
+    }
+};

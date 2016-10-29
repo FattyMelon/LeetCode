@@ -1,3 +1,5 @@
+// solution 1
+
 class Solution {
 public:
     bool isValid(string s) {
@@ -18,5 +20,28 @@ public:
         }
 
         return stack1.empty();
+    }
+};
+
+
+// solution 2
+
+class Solution {
+public:
+    bool isValid(string s) {
+        string left = "{[(";
+        string right = "}])";
+        stack<char> stackTemp;
+        for (auto c : s) {
+            if (left.find(c) != string::npos) {
+                stackTemp.push(c);
+            } else if (stackTemp.empty() || stackTemp.top() != left[right.find(c)]) {
+                return false;
+            }
+            else {
+                stackTemp.pop();
+            }
+        }
+        return stackTemp.empty();
     }
 };
