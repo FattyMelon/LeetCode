@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int aLen = a.size(), bLen = b.size();
+        int c = 0, temp;
+        int minLen = min(aLen, bLen);
+        int rLen = max(aLen, bLen) + 1;
+        string result(rLen, '0');
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+        for (int i = 0; i < minLen; ++i) {
+            temp = (a[i] - '0') + (b[i] - '0') + c;
+            c = temp / 2;
+            result[i] = temp % 2 + '0';
+        }
+        if (aLen < bLen) {
+            for (int j = minLen; j < bLen; ++j) {
+                temp = (b[j] - '0') + c;
+                c = temp / 2;
+                result[j] = temp % 2 + '0';
+            }
+        } else {
+            for (int j = minLen; j < aLen; ++j) {
+                temp = (a[j] - '0') + c;
+                c = temp / 2;
+                result[j] = temp % 2 + '0';
+            }
+        }
+        result[rLen - 1] = c + '0';
+        reverse(result.begin(), result.end());
+        auto loc = result.find('1');
+        if (loc != result.npos) return result.substr(loc);
+        return "0";
+    }
+};

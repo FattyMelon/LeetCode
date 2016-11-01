@@ -1,0 +1,20 @@
+// 背！
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map <string, multiset<string>> temp;
+        vector<vector<string>> result;
+
+        for (string str : strs) {
+            string tStr = str;
+            sort(str.begin(), str.end());
+            temp[str].insert(tStr);
+        }
+        for (auto m : temp) {
+            vector<string> tempSet(m.second.begin(), m.second.end());
+            result.push_back(tempSet);
+        }
+        return result;
+    }
+};

@@ -1,0 +1,57 @@
+// 递归求解   35ms，速度较慢
+
+class Solution {
+public:
+    void getSum(vector<vector<int>> &vec, vector<int> &candidates, vector<int> tempVec,int i, int target) {
+        if (i >= candidates.size())   return;
+        int temp = candidates[i];
+        if (temp > target)
+            return;
+        else if (temp == target) {
+            tempVec.push_back(temp);
+//            print(tempVec);
+            vec.push_back(tempVec);
+            return;
+        }
+        getSum(vec, candidates, tempVec, i+1, target);
+        tempVec.push_back(temp);
+        getSum(vec, candidates, tempVec, i, target - candidates[i]);
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> result;
+        vector<int> temp;
+        sort(candidates.begin(), candidates.end());
+ 
+        getSum(result, candidates, temp, 0, target);
+        return result;
+    }
+};
+
+
+// 解法2， 将tempVec做为引用，减少参数传递时的拷贝时间，时间为19ms
+class Solution {
+public:
+    void getSum(vector<vector<int>> &vec, vector<int> &candidates, vector<int> &tempVec,int i, int target) {
+        if (target < 0 || i >= candidates.size())
+            return;
+        if (0 == target) {
+//            print(tempVec);
+            vec.push_back(tempVec);
+            return;
+        }
+        tempVec.push_back(candidates[i]);
+        getSum(vec, candidates, tempVec, i, target - candidates[i]);
+        tempVec.pop_back();
+        getSum(vec, candidates, tempVec, i+1, target);
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> result;
+        vector<int> temp;
+        sort(candidates.begin(), candidates.end());
+
+        getSum(result, candidates, temp, 0, target);
+        return result;
+    }
+};
