@@ -11,12 +11,12 @@
 题目5 有点难度的动态规划，狗昱我们之前聊过的，你也好好看看  
 
 # 作业2：（连同作业1，最好11月10号前搞定）
-(因为wkh说的要不要按题型来刷，那我先给个数组的吧，下一次链表，换着来不枯燥)
-1. two Sum  //要求O(nlogn)或者O(n)的解法
-167. two sum 2	//要求O(n)的解法
-39. Combination Sum 
-40. Combination Sum II
-33. Search in Rotated Sorted Array  //暴力解法遍历一遍O(n)可以AC，但是要求你们写出O(logn)的解法
+(因为wkh说的要不要按题型来刷，那我先给个数组的吧，下一次链表，换着来不枯燥)   
+1. two Sum  //要求O(nlogn)或者O(n)的解法  
+167. two sum 2	//要求O(n)的解法  
+39. Combination Sum   
+40. Combination Sum II   
+33. Search in Rotated Sorted Array  //暴力解法遍历一遍O(n)可以AC，但是要求你们写出O(logn)的解法  
 
 
 # git init
