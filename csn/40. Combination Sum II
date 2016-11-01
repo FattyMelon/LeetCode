@@ -1,0 +1,33 @@
+// 由39题修改而来，关键点在于有可能重复，所以加了一个while 
+
+class Solution {
+public:
+    void getSum(vector<vector<int>> &vec, vector<int> &candidates, vector<int> &tempVec,int i, int target) {
+        if (0 == target) {
+            // print(tempVec);
+            vec.push_back(tempVec);
+            return;
+        }
+        if (target < 0 || i >= candidates.size())
+            return;
+
+        // 选择candidate
+        tempVec.push_back(candidates[i]);
+        getSum(vec, candidates, tempVec, i+1, target - candidates[i]);
+        
+        // 不选择candidate,为了防止重复
+        tempVec.pop_back();
+        int temp = candidates[i];
+        while(i+1 < candidates.size() && temp == candidates[i+1]) i++;
+        getSum(vec, candidates, tempVec, i+1, target);
+    }
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> result;
+        vector<int> temp;
+        sort(candidates.begin(), candidates.end());
+
+        getSum(result, candidates, temp, 0, target);
+        return result;
+    }
+};

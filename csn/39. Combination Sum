@@ -33,13 +33,14 @@ public:
 class Solution {
 public:
     void getSum(vector<vector<int>> &vec, vector<int> &candidates, vector<int> &tempVec,int i, int target) {
-        if (target < 0 || i >= candidates.size())
-            return;
         if (0 == target) {
 //            print(tempVec);
             vec.push_back(tempVec);
             return;
         }
+        if (target < 0 || i >= candidates.size())
+            return;
+
         tempVec.push_back(candidates[i]);
         getSum(vec, candidates, tempVec, i, target - candidates[i]);
         tempVec.pop_back();
