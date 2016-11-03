@@ -1,0 +1,41 @@
+// 类似于层次遍历，13ms
+// O(n)的算法复杂度，在求max时做了点小改动。
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int currentMax = 0, nextMax = 0, i = 0, n = nums.size();
+        if (n < 2) return 0;
+        int level = 0;
+        while (currentMax >= i) {
+            ++level;
+            for(;i <= currentMax; ++i) {
+                if (nums[i] + i > nextMax) {
+                    nextMax = nums[i] + i;
+                    if (nextMax >= n-1) return level;
+                }
+            }
+            currentMax = nextMax;
+        }
+        return level;
+    }
+};
+
+// 19ms
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int currentMax = 0, nextMax = 0, i = 0, n = nums.size();
+        if (n < 2) return 0;
+        int level = 0;
+        while (currentMax >= i) {
+            ++level;
+            for(;i <= currentMax; ++i) {
+                nextMax = max(nextMax, nums[i] + i);
+                if (nextMax >= n-1) return level;
+            }
+            currentMax = nextMax;
+        }
+        return level;
+    }
+};

@@ -1,0 +1,27 @@
+// 链表中需要逆序的可以考虑头插法
+
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode dummy(-1);
+        dummy.next = head;
+        ListNode *pre = &dummy, *cur = pre, *nex, *tmp;
+        int num = 0;
+        while(cur = cur->next)  ++num;  // 计算链表长度
+        cur = pre;
+        while (num >= k) {
+            cur = pre->next;
+            nex = cur->next;
+            for (int i = 1; i < k; ++i) {   //做k-1次头插法
+                tmp = nex->next;
+                cur->next = tmp;
+                nex->next = pre->next;
+                pre->next = nex;
+                nex = tmp;
+            }
+            pre = cur;
+            num -= k;
+        }
+        return dummy.next;
+    }
+};

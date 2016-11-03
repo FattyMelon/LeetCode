@@ -1,0 +1,25 @@
+// 用的是divisor叠加，不过用的是优化后的。每次都乘以2
+
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if (!divisor || (dividend == INT_MIN && divisor == -1)) 
+            return INT_MAX;
+        int sign = ((dividend < 0) ^ (divisor < 0)) ? -1 : 1;
+        long long dvd = labs(dividend), dvs = labs(divisor);
+        
+        int total = 0;
+        
+        while (dvd >= dvs) {
+            long long temp = dvs, multiple = 1;
+            while (dvd >= (temp << 1)) {
+                temp = temp << 1;
+                multiple = multiple << 1;
+            }
+            dvd -= temp;
+            total += multiple;
+        }
+        
+        return total * sign;
+    }
+};

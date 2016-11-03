@@ -1,0 +1,32 @@
+// 优化过的，不需要全部遍历，可以提前退出12ms
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int reach = 0, n = nums.size() - 1;
+        
+        for (int i = 0; i <= reach && i <= n; ++i) {
+            reach = max(reach, i + nums[i]);
+            if (reach >= n)
+                return true;
+        }
+        
+        return false;
+    }
+};
+
+// 第一次写的  16ms，较快
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int max1 = 0, len = nums.size();
+        int i = 0;
+        if (len == 0)   return false;
+        if (len == 1)   return true;
+        while (i <= max1 && max1 < len) {
+            max1 = max(max1, i + nums[i]);
+            ++i;
+        }
+        return max1 >= len - 1;
+    }
+};
