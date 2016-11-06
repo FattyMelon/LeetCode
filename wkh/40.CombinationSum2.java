@@ -20,3 +20,4 @@ public class Solution{
     }
 
 }
+// 此题用hashset实现更简单，不需要判断去重。
