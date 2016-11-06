@@ -1,0 +1,51 @@
+// 背
+
+class RandomizedSet {
+public:
+    /** Initialize your data structure here. */
+    RandomizedSet() {
+        len = 0;
+    }
+    
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    bool insert(int val) {
+        if (map1.find(val) != map1.end())   return false;
+        // not exist
+        vec.push_back(val);
+        map1[val] = len++;
+        return true;
+    }
+    
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    bool remove(int val) {
+        if (map1.find(val) == map1.end())   return false;   // not exist
+        // exist
+        int i = map1[val];
+        int last_val = vec[len - 1];
+        vec[i] = last_val;
+        map1[last_val] = i;
+        map1.erase(val);
+        vec.pop_back();
+        --len;
+        return true;
+    }
+    
+    /** Get a random element from the set. */
+    int getRandom() {
+        if (len == 0)   return 0;
+        return (vec[rand() % len]);
+    }
+    
+private:
+    vector<int> vec;
+    unordered_map<int, int> map1;
+    int len;
+};
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * bool param_1 = obj.insert(val);
+ * bool param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */

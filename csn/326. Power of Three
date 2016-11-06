@@ -1,0 +1,19 @@
+// 因为3是质数，所以如果n是3的power，那么肯定可以整除3的19次方， 1162261467
+
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        if (n <= 0) return false;
+        return 1162261467%n == 0;
+    }
+};
+
+// 计算1162261467的方法
+/*
+long long temp = 3;
+    for (int i = 1;i < 32; ++i) {
+        if (temp*3 < INT_MAX)
+            temp *= 3;
+    }
+cout << temp;
+*/
