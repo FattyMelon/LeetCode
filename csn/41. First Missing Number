@@ -1,0 +1,21 @@
+// 与268题目类似，找出丢失的正整数
+
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int n = nums.size();
+        
+        for (int i = 0; i < n; ++i) {
+            int key = nums[i];
+            while (key > 0 && key < n && key != i+1 && nums[key-1] != key) {
+                swap(nums[i], nums[key-1]);
+                key = nums[i];
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] != i+1)
+                return i+1;
+        }
+        return n+1;
+    }
+};

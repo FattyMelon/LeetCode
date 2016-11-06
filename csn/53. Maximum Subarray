@@ -1,0 +1,14 @@
+// 每次记录premax之前的最大值。时间复杂度O(n)
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int res = INT_MIN, premax = INT_MIN;
+        for (int i = 0; i < nums.size(); ++i) {
+            int curmax = premax > 0 ? premax + nums[i] : nums[i];
+            res = max(res, curmax);
+            premax = curmax;
+        }
+        return res;
+    }
+};
