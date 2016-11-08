@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int premin = INT_MAX, profit = 0;
+        int n = prices.size();
+        if (n == 0) return 0;
+        for (int i = 0; i < n; ++i) {
+            if (prices[i] < premin) premin = prices[i];
+            if (i < n-1 && prices[i] > prices[i+1] ) { // 跌了就卖
+                profit += prices[i] - premin;
+                premin = INT_MAX;
+            }
+        }
+        if (premin < prices[n-1])  profit += prices[n-1]-premin;
+        return profit;
+    }
+};
