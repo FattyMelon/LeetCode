@@ -1,3 +1,4 @@
+// 方法1
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
@@ -12,6 +13,20 @@ public:
             }
         }
         if (premin < prices[n-1])  profit += prices[n-1]-premin;
+        return profit;
+    }
+};
+
+// 方法2
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int premin = INT_MAX, profit = 0;
+        int n = prices.size();
+        for (int i = 1; i < n; ++i) {
+            if (prices[i] > prices[i-1])
+                profit += prices[i] - prices[i-1];
+        }
         return profit;
     }
 };
