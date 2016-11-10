@@ -1,0 +1,79 @@
+// 最简单的解法，直接插入后排序，重新求解
+
+class Solution {
+public:
+    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+        intervals.push_back(newInterval);
+        sort(intervals.begin(),intervals.end(),[](Interval a, Interval b){  return a.start<b.start;});
+        vector<Interval> res;
+        if (intervals.empty())  return res;
+        res.push_back(intervals[0]);
+        for (int i = 1;i < intervals.size(); ++i) {
+            if (res.back().end >= intervals[i].start)
+                res.back().end = max(res.back().end, intervals[i].end);
+            else
+                res.push_back(intervals[i]);
+        }
+        return res;
+    }
+};
+
+
+// 找到该插入的地方，插入
+
+class Solution {
+public:
+    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+        int i = 0, n = intervals.size();
+        bool tag = false;
+        vector<Interval> res;
+        if (n == 0) return {newInterval};
+        while (i < n){
+            if (intervals[i].end < newInterval.start) {
+                res.push_back(intervals[i++]);
+            }
+            else {
+                int tmin = min(intervals[i].start, newInterval.start);
+                while (intervals[i].end < newInterval.end && i < n - 1) ++i; //找到最后一个可能要合并的i
+                if (newInterval.end < intervals[i].start)   --i;
+                int tmax = max(intervals[i].end, newInterval.end);
+                res.push_back(Interval(tmin,tmax));
+                ++i;
+                tag = true;
+                break;
+            }
+        }
+        for (; i < n; ++i)
+            res.push_back(intervals[i]);
+            
+        if (!tag)   res.push_back(newInterval);     //如果都没地方可以插入
+        
+        return res;
+    }
+};
+
+// 上面方法的便捷写法
+class Solution {
+public:
+    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+        int i = 0, n = intervals.size();
+        bool tag = false;
+        vector<Interval> res;
+        if (n == 0) return {newInterval};
+        for (; i < n; ++i) {
+            if (intervals[i].end < newInterval.start) {
+                res.push_back(intervals[i]);
+            } else if (intervals[i].start > newInterval.end) {
+                break;
+            } else {
+                newInterval.start = min(intervals[i].start, newInterval.start);
+                newInterval.end = max(intervals[i].end, newInterval.end);
+            }
+        }
+        res.push_back(newInterval);
+        for (; i < n; ++i)
+            res.push_back(intervals[i]);
+        
+        return res;
+    }
+};

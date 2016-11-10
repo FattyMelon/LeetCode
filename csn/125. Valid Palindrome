@@ -1,0 +1,21 @@
+class Solution {
+public:
+//    bool isalp(char c) {
+//        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
+//    }
+
+    bool isPalindrome(string s) {
+        int len = s.size();
+        int l = 0, r = len - 1;
+        while (l <= r) {
+            while (!isalnum(s[l])) ++l;
+            while (!isalnum(s[r])) --r;
+            if (l > r) break;
+
+            if (tolower(s[l]) != tolower(s[r]))   return false;
+            ++l;
+            --r;
+        }
+        return true;
+    }
+};

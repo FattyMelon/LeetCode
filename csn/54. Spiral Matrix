@@ -1,0 +1,26 @@
+// 自己写的，AC
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> res;
+        int n = matrix.size();
+        if (n == 0) return {};
+        int m = matrix.front().size();
+        int left = 0, right = m - 1, up = 0, bottom = n - 1;
+        while (left <= right && up <= bottom) {
+            for (int j = left; j <= right; ++j) res.push_back(matrix[up][j]);
+            ++up;      // ->遍历
+            if (up > bottom)    break;
+            for (int i = up; i <= bottom; ++i) res.push_back(matrix[i][right]);
+            --right;  // 向下
+            if (right < left)   break;
+            for (int j = right; j >= left; --j) res.push_back(matrix[bottom][j]);
+            --bottom; // <-向左
+            if (up > bottom)    break;
+            for (int i = bottom; i >= up; --i) res.push_back(matrix[i][left]);
+            ++left;   //向上
+        }
+        return res;
+    }
+};

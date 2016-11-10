@@ -1,0 +1,33 @@
+// 技巧，检查是否是2的偶数次方
+
+class Solution {
+public:
+    bool isPowerOfFour(int num) {
+        if (num <= 0)   return false;
+        int root = round(sqrt(num));
+        if (num != root * root) return false;   //检查是否可以开方，8，32等都不行
+        return !(num & (num - 1));    //检查是否是2的power
+    }
+};
+
+// 方法2.用bitset
+
+// If it's power of two, it will only contain one "1" like ( 0001, 0010, 0100 so on);
+// if it's power of four, it will only contain one "1" AND the "1" must be at even position.
+
+class Solution {
+public:
+    bool isPowerOfFour(int num) {
+        if (num <= 0)   return false;
+        bitset<32> n(num);
+        if(n.count() != 1){
+            return false;
+        }
+        for(int i = 0; i < 32; i++){
+            if(n[i] == 1 && i % 2 == 0){
+                return true;
+            }
+        }
+        return false;
+    }
+};

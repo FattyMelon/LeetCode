@@ -1,0 +1,19 @@
+// 模拟规律题
+
+class Solution {
+public:
+    int minMoves(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        
+        int i = 1;
+        int total = 0;
+        for (int n = nums.size() - 1;n > 0; --n) {
+            int temp = nums[n] - nums[n-1];
+            if (temp) {
+                total += temp * i;
+            }
+            i++;
+        }
+        return total;
+    }
+};

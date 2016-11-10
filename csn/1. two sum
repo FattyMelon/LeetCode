@@ -1,4 +1,6 @@
-//时间复杂度O(nlogn)
+// 时间复杂度O(n), unordered_map就是hash，find函数的时间复杂度为O(1)
+// 注意map的搜索效率是O(logn),unordered_map是O(1)
+// map是用红黑树实现的，unordered_map是用hash实现的
 
 class Solution {
 public:
