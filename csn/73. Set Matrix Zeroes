@@ -1,0 +1,27 @@
+// 在不允许其他空间的情况下，空间复杂度为O(1)
+// 如果允许有其他空间，可以把时间缩短
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        if (m == 0) return;
+        int n = matrix[0].size(), k = 0;
+        while (k < n && matrix[0][k] != 0) ++k;
+        // Use first row/column as marker, scan the matrix
+        for (int i = 1; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+                if (matrix[i][j] == 0)
+                    matrix[0][j] = matrix[i][0] = 0;
+        // Set the zeros
+        for (int i = 1; i < m; ++i)
+            for (int j = n - 1; j >= 0; --j)
+                if (matrix[0][j] == 0 || matrix[i][0] == 0)
+                    matrix[i][j] = 0;
+        // Set the zeros for the first row
+        if (k < n) {
+            for (int j = 0; j < n; ++j)
+                matrix[0][j] = 0;
+        }
+    }
+};

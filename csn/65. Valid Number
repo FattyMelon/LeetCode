@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool isNumber(string s) {
+        int tag_dot = -1, tag_e = -1, tag_num = -1;
+        int l = 0, r = s.size() - 1;
+        // 过滤前后的空格
+        while(s[l] == ' ')  ++l;
+        while(s[r] == ' ')  --r;
+
+        for (int i = l; i <= r; ++i) {
+            if ((s[i] == '-' || s[i] == '+') && (i == l || i == tag_e+1))  continue;
+            else if (s[i] == '.' && tag_dot == -1 && tag_e == -1) {
+                // dot没出现过时，且e没出现过
+                if ((tag_num != -1) || (i < r && s[i+1] >= '0' && s[i+1] <= '9'))
+                    tag_dot = i;
+                else
+                    return false;
+            } else if (s[i] >= '0' && s[i] <= '9') {
+                tag_num = i;
+                continue;
+            } else if (s[i] == 'e' && (tag_e == -1 && tag_num != -1)) {
+                // e没出现过时或者e不出现在第一个字符
+                tag_e = i;
+            } else {
+                return false;
+            }
+        }
+        return tag_num > tag_e;
+    }
+};

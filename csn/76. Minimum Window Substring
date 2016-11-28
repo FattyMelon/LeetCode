@@ -1,0 +1,67 @@
+// 比较直接的解法，速度慢
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        if (s.empty())  return "";
+        unordered_map<char, int> dic;
+        unordered_map<char, int> tmp;
+        int len = 0, n = s.size(), j = 0, minvl = INT_MAX;
+        int tsize = t.size();
+        string res;
+        for (auto c : t)    ++dic[c];
+        for (int i = 0; i < n; ++i) {
+            ++tmp[s[i]];
+            if (tmp[s[i]] <= dic[s[i]])
+                ++len;
+            if (len >= tsize) {
+                // 去除多余的字符
+                while (dic[s[j]] == 0 ||tmp[s[j]] > dic[s[j]])  {
+                    --tmp[s[j]];
+                    ++j;
+                }
+                if ( i-j+1 < minvl) {
+                    res = s.substr(j, i-j+1);
+                    minvl = i-j+1;
+                }
+                --tmp[s[j]];
+                ++j;
+                --len;
+            }
+        }
+        return res;
+    }
+};
+
+// 将map更换为数组，速度从100ms提高至12ms
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        if (s.empty())  return "";
+        int dic[128] = {0};
+        int tmp[128] = {0};
+        int len = 0, n = s.size(), j = 0, minvl = INT_MAX;
+        int tsize = t.size();
+        string res;
+        for (auto c : t)    ++dic[c];
+        for (int i = 0; i < n; ++i) {
+            ++tmp[s[i]];
+            if (tmp[s[i]] <= dic[s[i]])
+                ++len;
+            if (len >= tsize) {
+                // 去除多余的字符
+                while (dic[s[j]] == 0 ||tmp[s[j]] > dic[s[j]])  {
+                    --tmp[s[j]];
+                    ++j;
+                }
+                if ( i-j+1 < minvl) {
+                    res = s.substr(j, i-j+1);
+                    minvl = i-j+1;
+                }
+                --tmp[s[j]];
+                ++j;
+                --len;
+            }
+        }
+        return res;
+    }
+};

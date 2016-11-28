@@ -1,0 +1,27 @@
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (head == NULL)   return NULL;
+        ListNode dummy(-1);
+        dummy.next = head;
+        ListNode *first = &dummy, *second = head, *last = head;
+        bool tag = false;
+        while(last != NULL) {
+            last = last->next;
+            while (last != NULL && last->val == second->val) {
+                last = last->next;
+                tag = true;
+            }
+            if (tag) {
+                //如果有重复的
+                first ->next = last;
+                second = last;
+                tag = false;
+            } else {
+                first = first->next;
+                second = second->next;
+            }
+        }
+        return dummy.next;
+    }
+};

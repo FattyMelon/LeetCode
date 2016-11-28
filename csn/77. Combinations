@@ -1,0 +1,44 @@
+// 递归，比较慢
+
+class Solution {
+public:
+    void dfs(vector<vector<int>> &res, vector<int> &temp, int &n, int &k, int len, int start) {
+        if (start > n+1)  return;
+        if (len >= k) {
+            res.push_back(temp);
+            return;
+        }
+        temp.push_back(start);
+        dfs(res, temp, n, k, len+1, start+1);
+        temp.pop_back();
+        dfs(res, temp, n, k, len, start+1);
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> res;
+        vector<int> temp;
+        dfs(res, temp, n, k, 0, 1);
+        return res;
+    }
+};
+
+
+// 优化的递归
+class Solution {
+public:
+    vector<vector<int>> res;
+    void dfs(vector<int> &temp, int &n, int &k, int len, int start) {
+        if (len == k) {
+            res.push_back(temp);
+            return;
+        }
+        for (int i = start; i<=n; i++){
+            temp[len] = i;
+            dfs(temp, n, k, len+1, i+1);
+        }
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> temp(k, 0);
+        dfs(temp, n, k, 0, 1);
+        return res;
+    }
+};

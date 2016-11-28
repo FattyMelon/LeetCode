@@ -1,0 +1,31 @@
+// 关键是
+//	istringstream iss(path);
+// 	getline(iss, tok, '/')
+// 用法：可以根据分割'/'来获取字符串tok
+
+class Solution {
+public:
+    string simplifyPath(string path) {
+        vector<string> stack;
+        istringstream iss(path);
+        string tok;
+
+        while(getline(iss, tok,'/')) {
+            if (tok == ".") continue;
+            else if (tok == "..") {
+                if (stack.empty())  continue;
+                stack.pop_back();
+            } else if (!tok.empty()){
+                stack.push_back(tok);
+            }
+        }
+
+        // 输出stack中的元素
+        string res;
+        for (int i = 0; i < stack.size(); ++i) {
+            res += '/';
+            res += stack[i];
+        }
+        return res.empty() ? "/" : res;
+    }
+};
