@@ -1,0 +1,53 @@
+// 自己写的, 内存可能超了，思路相同
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        if (p.empty())  return s.empty();
+        int n = s.size(), m = p.size();
+        vector<vector<bool>> f(n+1, vector<bool>(m+1, true));
+
+        f[0][0] = true;
+        bool flag = true;
+        for (int i = 1; i <= n; i++)
+            f[i][0] = false;
+        // p[0.., j - 3, j - 2, j - 1] matches empty if p[j - 1] is '*' and p[0..j - 3] matches empty
+        for (int j = 1; j <= n; j++) {
+            if (p[j - 1] != '*') flag = false;
+            f[0][j] = flag;
+        }
+
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 1; j <= m; ++j) {
+                if (p[j-1] == '*') {
+                    f[i][j] = f[i-1][j-1] || f[i-1][j];
+                }
+                else {
+                    f[i][j] = f[i-1][j-1] && (p[j-1] == '?' ||s[i-1] == p[j-1]);
+                }
+            }
+        }
+        return f[n][m];
+    }
+};
+
+// AC
+
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int pLen = p.size(), sLen = s.size(), i, j, k, cur, prev;
+        if(!pLen) return sLen == 0;
+        bool matched[2][sLen+1];
+        fill_n(&matched[0][0], 2*(sLen+1), false);
+        
+        matched[0][0] = true;
+        for(i=1; i<=pLen; ++i)
+        {
+            cur = i%2, prev= 1-cur;
+            matched[cur][0]= matched[prev][0] && p[i-1]=='*';
+            if(p[i-1]=='*') for(j=1; j<=sLen; ++j) matched[cur][j] = matched[cur][j-1] || matched[prev][j];
+            else for(j=1; j<=sLen; ++j)            matched[cur][j] =  matched[prev][j-1] && (p[i-1]=='?' || p[i-1]==s[j-1]) ;
+        }
+            return matched[cur][sLen];
+    }
+};

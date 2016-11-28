@@ -1,4 +1,20 @@
 // 关键在于 'a   '这种字符串
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int n = s.size();
+        int res = 0;
+        // 去掉s后面的空格
+        while(s[n-1] == ' ')    --n;
+        for (int i = n - 1; i >= 0; --i) {
+            if(s[i] != ' ') ++res;
+            else break;
+        }
+        return res;
+    }
+};
+
 // if (it == s.begin() && *it != ' ') ++count; 这个是重点
 
 class Solution {

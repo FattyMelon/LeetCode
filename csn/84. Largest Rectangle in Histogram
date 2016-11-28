@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        heights.push_back(0);
+        stack<int> Stack;
+        int res = 0;
+        for (int i = 0; i < heights.size();) {
+            if (Stack.empty() || heights[Stack.top()] <= heights[i])  Stack.push(i++);
+            else {
+                // 高度小于Stack的top
+                int tmp = Stack.top();
+                Stack.pop();
+                res = max(res, heights[tmp] * (Stack.empty() ? i : i - Stack.top() - 1));
+            }
+        }
+        return res;
+    }
+};

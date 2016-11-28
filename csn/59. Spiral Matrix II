@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> matrix(n, vector<int>(n, -1));
+        int left = 0, right = n - 1, up = 0, bottom = n - 1;
+        int tag = 1;
+        while (left <= right && up <= bottom) {
+            for (int j = left; j <= right; ++j) matrix[up][j] = tag++;
+            ++up;      // ->遍历
+            if (up > bottom)    break;
+            for (int i = up; i <= bottom; ++i) matrix[i][right] = tag++;
+            --right;  // 向下
+            if (right < left)   break;
+            for (int j = right; j >= left; --j) matrix[bottom][j] = tag++;
+            --bottom; // <-向左
+            if (up > bottom)    break;
+            for (int i = bottom; i >= up; --i) matrix[i][left] = tag++;
+            ++left;   //向上
+        }
+        return matrix;
+    }
+};

@@ -1,3 +1,55 @@
+// 第二次自己写的
+
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        vector<int> res;
+        if (words.empty() || s.empty()) return res;
+        int slen = s.size(), n = words.size(), wl = words[0].size();
+        unordered_map<string, int> dic;
+        // 统计所有的word出现的次数
+        for (int i = 0; i < n; ++i) {
+            dic[words[i]]++;
+        }
+
+        for (int i = 0; i < wl; ++i) {
+            int left = i, count = 0;
+            unordered_map<string, int> tdic;
+            for (int j = i; j < slen; j += wl) {
+                string tstr = s.substr(j, wl);
+                if (dic[tstr] != 0) {
+                    ++tdic[tstr];
+                    if (tdic[tstr] <= dic[tstr]) {
+                        ++count;
+                    } else {
+                        // tstr出现的次数过多
+                        while(tdic[tstr] > dic[tstr]) {
+                            string temp = s.substr(left, wl);
+                            if (temp != tstr)   --count;
+                            --tdic[temp];
+                            left += wl;
+                        }
+                    }
+                    if (count == n) {
+                        // 符合条件的结果
+                        res.push_back(left);
+                        --tdic[s.substr(left, wl)];
+                        --count;
+                        left += wl;
+                    }
+                } else {
+                    // tstr不存在, 前面的全部否定
+                    tdic.clear();
+                    count = 0;
+                    left = j + wl;
+                }
+            }
+        }
+        return res;
+    }
+};
+
+
 // 细节实现题，时间复杂度不好求。估计是O(2 * wl * N / wl) = O(n)
 
 class Solution {
