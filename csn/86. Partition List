@@ -1,0 +1,21 @@
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        if (head == NULL)   return NULL;
+        ListNode dummy(-1), dummy2(-1);
+        ListNode *p = head, *less = &dummy, *bigger = &dummy2;
+        while(p != NULL) {
+            if (p->val < x) {
+                less->next = p;
+                less = p;
+            } else {
+                bigger->next = p;
+                bigger = p;
+            }
+            p = p->next;
+        }
+        less->next = dummy2.next;
+        bigger->next = NULL;
+        return dummy.next;
+    }
+};

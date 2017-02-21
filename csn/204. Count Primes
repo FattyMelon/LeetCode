@@ -1,0 +1,57 @@
+// 292ms
+class Solution {
+public:
+    int countPrimes(int n) {
+        vector<bool> prime(n, true);
+        prime[0] = false, prime[1] = false;
+        for (int i = 0; i < sqrt(n); ++i) {
+            if (prime[i]) {
+                for (int j = i*i; j < n; j += i) {
+                    prime[j] = false;
+                }    
+            }    
+        }
+        return count(prime.begin(), prime.end(), true);
+    }
+};
+
+
+// 82ms
+class Solution {
+        public:
+        int countPrimes(int n) {
+            vector<int> prime(n, 1);
+            if (n < 2)  return 0;
+            int cnt = 2;
+            for (int i = 2; i < sqrt(n); ++i) {
+                if (prime[i]) {
+                    for (int j = i*i; j < n; j += i) {
+                        cnt += prime[j];
+                        prime[j] = 0;
+                    }
+                }
+            }
+            return n-cnt;
+        }
+};
+
+
+遍历N能否能被从2到sqrt(N)之间的素数整除。若不能则为素数。
+bool IsPrime(unsigned n)  
+{  
+    if (n<2)  
+    {  
+        //小于2的数即不是合数也不是素数  
+        throw 0;  
+    }  
+    for(unsigned i=2;i<sqrt(n)+1;++i)  
+    {   
+        // 和比它的一半小数相除，如果都除不尽，证明素数  
+        if ( 0 == n % i )  
+        {   
+            // 除尽了，合数  
+            return false;  
+        }  
+    }  
+    return true; // 都没除尽，素数  
+}  
