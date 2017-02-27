@@ -1,0 +1,55 @@
+// 正常的迭代算法
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode*> stack1;
+        vector<int> result;
+        TreeNode *curNode = root;
+        while(curNode || !stack1.empty()) {
+            if (curNode) {
+                stack1.push(curNode);
+                curNode = curNode->left;
+            } else {
+                curNode = stack1.top();
+                stack1.pop();
+                result.push_back(curNode->val);
+                curNode = curNode->right;
+            }
+        }
+        return result;
+    }
+};
+
+// Morris中序遍历，用到了线索二叉树
+// 注意前序遍历只有一行不同
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> result;
+        TreeNode *curNode = root;
+        while (curNode) {
+            if (curNode->left == NULL) {
+                result.push_back(curNode->val);
+                curNode = curNode->right;
+            } else {
+                TreeNode *preNode = curNode->left;
+                while(preNode->right && preNode->right != curNode)
+                    preNode = preNode->right;
+                
+                if (preNode->right == NULL) {
+                    // result.push_back(curNode->val); 前序遍历应该改到这个位置
+                    preNode->right = curNode;
+                    curNode = curNode->left;
+                } else {    //preNode->right == curNode
+                    preNode->right = NULL;
+                    result.push_back(curNode->val);
+                    curNode = curNode->right;
+                }
+            }
+        }
+        
+        return result;
+    }
+};
+

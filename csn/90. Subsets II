@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void getset(vector<vector<int>> &res, vector<int> &nums, vector<int> &temp, int n, int k) {
+        if (k >= n) {
+            res.push_back(temp);
+            return;
+        }
+        temp.push_back(nums[k]);
+        getset(res, nums, temp, n, k+1);
+        temp.pop_back();
+        for(int i = k; i < n-1; ++i) {
+            if (nums[i] == nums[i+1])   ++k;
+            else break;
+        }
+        getset(res, nums, temp, n, k+1);
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> temp;
+        sort(nums.begin(), nums.end());
+        getset(res, nums, temp,nums.size(), 0);
+        return res;
+    }
+};

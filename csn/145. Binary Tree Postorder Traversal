@@ -1,0 +1,55 @@
+
+// 普通迭代有技巧！！！
+// 必须和先序的子树顺序反着来！！！
+// 然后是输出序列也是反的
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        stack<TreeNode*> stack1;
+        vector<int> result;
+        TreeNode *curNode = root;
+        while(curNode || !stack1.empty()) {
+            if (curNode) {
+                stack1.push(curNode);
+                result.insert(result.begin(),curNode->val);
+                curNode = curNode->right;
+            } else {
+                curNode = stack1.top();
+                stack1.pop();
+                curNode = curNode->left;
+            }
+        }
+        return result;
+    }
+};
+
+// morris后序遍历
+
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> result;
+        TreeNode *curNode = root;
+        while (curNode) {
+            if (curNode->right == NULL) {
+                result.push_back(curNode->val);
+                curNode = curNode->left;
+            } else {
+                TreeNode *preNode = curNode->right;
+                while(preNode->left && preNode->left != curNode)
+                    preNode = preNode->left;
+                
+                if (preNode->left == NULL) {
+                    result.push_back(curNode->val);
+                    preNode->left = curNode;
+                    curNode = curNode->right;
+                } else {    //preNode->right == curNode
+                    preNode->left = NULL;
+                    curNode = curNode->left;
+                }
+            }
+        }
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};

@@ -1,0 +1,17 @@
+class Solution {
+public:
+    void preOrder(TreeNode *node, vector<string> &result, string temp) {
+        if (node->left == NULL && node->right == NULL) { // 叶子节点
+            result.push_back(temp);
+        }
+        if (node->left) preOrder(node->left, result, temp + "->" + to_string(node->left->val));
+        if (node->right) preOrder(node->right, result, temp + "->" + to_string(node->right->val));
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> result;
+        if (root == NULL)   return result;
+        string temp = to_string(root->val);
+        preOrder(root, result, temp);
+        return result;
+    }
+};
